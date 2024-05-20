@@ -1,0 +1,55 @@
+---
+name: 🚀 Local Remote Execution
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions: read-all
+
+jobs:
+  lre-remote:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: >- #v4.1.6
+          actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+
+      - name: Install Nix
+        uses: >- # v11
+          DeterminateSystems/nix-installer-action@8cdf194da984e4f12b2f8c36d1fa107c1dd67f5c
+
+      - name: Cache Nix derivations
+        uses: >- # v6
+          DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e
+
+      - name: Start Kubernetes cluster
+        run: >
+          nix run .#lre-mojo-cluster
+
+      - name: Print cluster state
+        run: |
+          kubectl get svc -A
+          kubectl get pod -A
+          kubectl get svc -A
+          kubectl get deployments -A
+          kubectl describe gtw
+          echo "cas"
+          kubectl logs -l app=nativelink-cas
+          echo "scheduler"
+          kubectl logs -l app=nativelink-scheduler
+          echo "worker"
+          kubectl logs -l app=nativelink-worker
+
+      - name: Run Mojo tests against the cluster
+        run: |
+          nix develop --impure --command \
+          bash -c "lre-bazel test --jobs=4 @mojo//... --verbose_failures"

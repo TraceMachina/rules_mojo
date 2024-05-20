@@ -1,0 +1,55 @@
+---
+name: 🔥 Test Mojo Standard library
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions: read-all
+
+jobs:
+  stdlib-tests:
+    strategy:
+      fail-fast: false
+      # TODO(aaronmondal): Add macos-14
+      matrix:
+        os: [ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+
+      - name: Checkout
+        uses: >- #v4.1.6
+          actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+
+      - name: Install Nix
+        uses: >- # v11
+          DeterminateSystems/nix-installer-action@8cdf194da984e4f12b2f8c36d1fa107c1dd67f5c
+
+      - name: Cache Nix derivations
+        uses: >- # v6
+          DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e
+      - name: Mount bazel cache
+        uses: >- # v4.0.2
+          actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+        with:
+          path: |
+            ~/.cache/bazel
+          key: >-
+            ${{ runner.os }}-bazel-${{ hashFiles(
+              '.bazelversion',
+              '.bazelrc',
+              'MODULE.bazel',
+              'MODULE.bazel.lock',
+              '**/*.nix',
+              'flake.lock'
+            ) }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
+
+      - name: Invoke Bazel build in Nix shell
+        run: |
+          nix develop --impure --command \
+          bash -c "bazel test --jobs=4 @mojo//... --verbose_failures"

@@ -1,0 +1,11 @@
+---
+name: nativelink
+org: rules_mojo
+runtime: go
+description: NativeLink development cluster for rules_mojo.
+organization:
+  pulumi:tags:
+    company: "rules_mojo"
+backend:
+  # Only intended to run locally.
+  url: file://~

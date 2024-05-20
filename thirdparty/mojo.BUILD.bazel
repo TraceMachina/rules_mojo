@@ -1,0 +1,156 @@
+"""Build file for the Mojo standard library."""
+
+load("@rules_mojo//mojo:defs.bzl", "mojo_library", "mojo_test")
+
+mojo_library(
+    name = "stdlib",
+    srcs = glob(["stdlib/src/**/*"]),
+)
+
+mojo_library(
+    name = "test_utils",
+    srcs = glob(["stdlib/test/test_utils/*.mojo"]),
+)
+
+[
+    mojo_test(
+        name = filename.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
+        srcs = [filename],
+        deps = [
+            ":stdlib",
+            ":test_utils",
+        ],
+        defines = ["TEST_DIR=testdir"],
+    )
+    for filename in glob(
+        ["stdlib/test/**/*.mojo"],
+        exclude = [
+            # These are the testutils for the `test_utils` target above.
+            "stdlib/test/test_utils/*.mojo",
+
+            # Handled separately due to nonstandard compile parameters.
+            "stdlib/test/builtin/test_file.mojo",
+            "stdlib/test/os/test_getenv_setenv.mojo",
+            "stdlib/test/sys/test_aarch64_target.mojo",
+            "stdlib/test/sys/test_macos_target.mojo",
+            "stdlib/test/sys/test_paramenv.mojo",
+            "stdlib/test/sys/test_windows_target.mojo",
+
+            # Tests using `__source_location` run separately without sandboxing.
+            "stdlib/test/os/path/test_exists.mojo",
+            "stdlib/test/os/path/test_isfile.mojo",
+            "stdlib/test/os/test_stat.mojo",
+            "stdlib/test/pathlib/test_pathlib.mojo",
+
+            # Tests below are completely disabled.
+
+            # This test runs for a long time and crashes CI. It usually passes
+            # on local execution.
+            "stdlib/test/builtin/test_print_long_string.mojo",
+
+            # Broken and disabled upstream.
+            "stdlib/test/builtin/test_issue_1505.mojo",
+            "stdlib/test/builtin/test_reversed.mojo",
+            "stdlib/test/os/path/test_islink.mojo",
+            "stdlib/test/utils/test_inlined_string.mojo",
+
+            # Requires debug build which isn't supported by rules_mojo yet.
+            "stdlib/test/sys/test_build_info_debug.mojo",
+
+            # These require LLVM's `not` and require extra effort to port.
+            "stdlib/test/os/test_trap.mojo",
+            "stdlib/test/os/test_trap_stringable.mojo",
+            "stdlib/test/sys/test_exit_1.mojo",
+
+            # rules_mojo doesn't support Python interop yet.
+            "stdlib/test/python/test_ownership.mojo",
+            "stdlib/test/python/test_python_error_handling.mojo",
+            "stdlib/test/python/test_python_info.mojo",
+            "stdlib/test/python/test_python_interop.mojo",
+            "stdlib/test/python/test_python_object.mojo",
+            "stdlib/test/python/test_python_object_len_raises.mojo",
+            "stdlib/test/python/test_python_to_mojo.mojo",
+        ],
+    )
+]
+
+mojo_test(
+    name = "test_builtin_test_file",
+    srcs = ["stdlib/test/builtin/test_file.mojo"],
+    deps = [":stdlib"],
+    defines = [
+        # TODO(aaronmondal): Hack. Handle runfiles properly.
+        "CURRENT_DIR=../_main~rules_mojo_dependencies~mojo/stdlib/test/builtin",
+        "TEMP_FILE_DIR=testdir",
+    ],
+    runtime_data = ["stdlib/test/builtin/test_file_dummy_input.txt"],
+)
+
+# TODO(aaronmondal): Add support for testtime environment variables.
+# mojo_test(
+#     name = "test_os_test_getenv_setenv",
+#     srcs = ["stdlib/test/os/test_getenv_setenv.mojo"],
+#     defines = ["TEST_MYVAR=MyValue"],
+# )
+
+mojo_test(
+    name = "test_sys_test_aarch64_target",
+    srcs = ["stdlib/test/sys/test_aarch64_target.mojo"],
+    target_compatible_with = ["@platforms//cpu:aarch64"],
+    deps = [":stdlib"],
+)
+
+mojo_test(
+    name = "test_sys_test_macos_target",
+    srcs = ["stdlib/test/sys/test_macos_target.mojo"],
+    target_compatible_with = ["@platforms//os:macos"],
+    deps = [":stdlib"],
+)
+
+mojo_test(
+    name = "test_sys_test_windows_target",
+    srcs = ["stdlib/test/sys/test_windows_target.mojo"],
+    deps = [":stdlib"],
+    target_compatible_with = ["@platforms//os:windows"],
+)
+
+mojo_test(
+    name = "test_sys_test_paramenv",
+    srcs = ["stdlib/test/sys/test_paramenv.mojo"],
+    deps = [":stdlib"],
+    defines = ["bar=99", "baz=hello", "foo=11"],
+)
+
+# These make use of `__source_location` which hardcodes the absolute location of
+# source files into target at compile time. Since sandboxes would be removed
+# after building the tests, all `__source_location`s would be invalid, so we run
+# them without sandboxing and with local execution. They're still cached
+# remotely because we assume remote caches to auto-validate changes in these
+# files.
+[
+    mojo_test(
+        name = file.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
+        srcs = [file],
+        deps = [":stdlib"],
+        tags = [
+            "no-sandbox",
+            "no-remote-exec",
+        ],
+    )
+    for file in [
+        "stdlib/test/os/path/test_exists.mojo",
+        "stdlib/test/os/path/test_isfile.mojo",
+        "stdlib/test/os/test_stat.mojo",
+    ]
+]
+
+mojo_test(
+    name = "test_pathlib_test_pathlib",
+    srcs = ["stdlib/test/pathlib/test_pathlib.mojo"],
+    deps = [":stdlib"],
+    defines = ["TEMP_FILE=tmp"],
+    tags = [
+        "no-sandbox",
+        "no-remote-exec",
+    ],
+)

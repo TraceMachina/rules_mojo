@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nativelink-worker-lre-mojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nativelink-worker-lre-mojo
+  template:
+    metadata:
+      labels:
+        app: nativelink-worker-lre-mojo
+    spec:
+      initContainers:
+        - name: setup-entrypoint
+          image: nixpkgs/nix-flakes:latest
+          command: ["/bin/sh", "-c"]
+          # The kind setup mounts the nativelink repository into the kind nodes
+          # at `/mnt/src_root`. This ensures that the tags between the worker
+          # configs and bazel toolchains match when this setup is run in CI.
+          #
+          # WARNING: The platform is *not* necessarily the container that is
+          # actually deployed here. The generator container in this example was
+          # `rbe-autogen-lre-mojo:<sometag>` and the platform was modified
+          # after the fact to be `lre-mojo:<sometag>`. The deployed container
+          # we use as worker is
+          # `nativelink-worker-lre-mojo:<some_potentially_other_tag>` which is a
+          # completely separate extension of the `lre-mojo` base image.
+          #
+          # yamllint disable rule:line-length
+          args:
+            - |
+              NATIVELINK_WORKER_PLATFORM=docker://lre-mojo:$(nix eval /mnt/src_root#lre-mojo.imageTag --raw) &&
+              printf '#!/bin/sh\nexport NATIVELINK_WORKER_PLATFORM=%s\nexec "$@"' "$NATIVELINK_WORKER_PLATFORM" > /entrypoint/entrypoint.sh &&
+              chmod +x /entrypoint/entrypoint.sh
+          # yamllint enable rule:line-length
+          volumeMounts:
+            - name: entrypoint
+              mountPath: /entrypoint
+            - name: mnt
+              mountPath: /mnt
+      containers:
+        - name: nativelink-worker-lre-mojo
+          # This image will be edited by kustomize.
+          image: nativelink-worker-lre-mojo
+          env:
+            - name: RUST_LOG
+              value: warn
+            - name: CAS_ENDPOINT
+              value: nativelink-cas
+            - name: SCHEDULER_ENDPOINT
+              value: nativelink-scheduler
+          volumeMounts:
+            - name: worker-config
+              mountPath: /worker.json
+              subPath: worker.json
+            - name: entrypoint
+              mountPath: /entrypoint
+          command: ["/entrypoint/entrypoint.sh"]
+          args: ["/bin/nativelink", "/worker.json"]
+      volumes:
+        - name: entrypoint
+          emptyDir: {}
+        - name: worker-config
+          configMap:
+            name: worker
+        - name: mnt
+          hostPath:
+            path: /mnt

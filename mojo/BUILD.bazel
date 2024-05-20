@@ -1,0 +1,46 @@
+"Central build file for the docs, platforms, toolchains and config settings."
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("//mojo:toolchain.bzl", "mojo_toolchain")
+
+[
+    string_flag(
+        name = flag_name,
+        build_setting_default = "",
+        visibility = ["//visibility:public"],
+    )
+    for flag_name in [
+        "MODULAR_HOME",
+        "MOJO_COMPILER",
+        "MOJO_CC_PATH",
+        "MOJO_LIBRARY_PATH",
+        "MOJO_PYTHON_LIBRARY",
+
+        # Unset values default to an empty string.
+        "MOJO_UNSET",
+    ]
+]
+
+toolchain_type(name = "toolchain_type")
+
+mojo_toolchain(
+    name = "mojo_toolchain_x86_64-unknown-linux-gnu",
+    MODULAR_HOME = ":MODULAR_HOME",
+    MOJO_CC_PATH = ":MOJO_CC_PATH",
+    MOJO_COMPILER = ":MOJO_COMPILER",
+    MOJO_LIBRARY_PATH = ":MOJO_LIBRARY_PATH",
+    MOJO_PYTHON_LIBRARY = ":MOJO_PYTHON_LIBRARY",
+    visibility = ["//visibility:public"],
+)
+
+toolchain(
+    name = "mojo_toolchain",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+        "@bazel_tools//tools/cpp:clang",
+    ],
+    toolchain = ":mojo_toolchain_x86_64-unknown-linux-gnu",
+    toolchain_type = ":toolchain_type",
+    visibility = ["//visibility:public"],
+)

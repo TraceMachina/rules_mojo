@@ -1,0 +1,491 @@
+This Third-Party Notices file provides notices and information about third
+party components included in the SOFTWARE. The following third-party
+components are licensed to Licensee pursuant to the following terms and conditions:
+
+1. Licensee's use of TensorFlow 2 is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+2. Licensee's use of MLPerf v3.0 inference benchmarks is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+   @misc{reddi2019mlperf,
+    title={MLPerf Inference Benchmark},
+    author={Vijay Janapa Reddi and Christine Cheng and David Kanter and Peter Mattson and Guenther Schmuelling and Carole-Jean Wu and Brian Anderson and Maximilien Breughe an
+d Mark Charlebois and William Chou and Ramesh Chukka and Cody Coleman and Sam Davis and Pan Deng and Greg Diamos and Jared Duke and Dave Fick and J. Scott Gardner and Itay Hu
+bara and Sachin Idgunji and Thomas B. Jablin and Jeff Jiao and Tom St. John and Pankaj Kanwar and David Lee and Jeffery Liao and Anton Lokhmotov and Francisco Massa and Peng
+Meng and Paulius Micikevicius and Colin Osborne and Gennady Pekhimenko and Arun Tejusve Raghunath Rajan and Dilip Sequeira and Ashish Sirasao and Fei Sun and Hanlin Tang and
+Michael Thomson and Frank Wei and Ephrem Wu and Lingjie Xu and Koichi Yamada and Bing Yu and George Yuan and Aaron Zhong and Peizhao Zhang and Yuchen Zhou},
+    year={2019},
+    eprint={1911.02549},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+   }
+
+3. Licensee's use of Torch-MLIR is subject to the terms and conditions of the BSD-style license from PyTorch.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+   All third-party software packages are copyright by their respective authors.
+
+   Copyright (c) 2020 LLVM Foundation.
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   3. Neither the names of Facebook, Deepmind Technologies, NYU, NEC Laboratories America
+      and IDIAP Research Institute nor the names of its contributors may be
+      used to endorse or promote products derived from this software without
+      specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   POSSIBILITY OF SUCH DAMAGE.
+
+4. Licensee's use of LLVM is subject to the terms and conditions of the Apache License v2.0 with LLVM Exceptions.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 with LLVM exceptions license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the license can be found at: https://github.com/llvm/llvm-project/blob/main/LICENSE.TXT
+
+5. Licensee's use of FlatBuffers is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+6. Licensee's use of ONNX is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+7. Licensee's use of Protocol Buffers is subject to the terms and conditions of the 3-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright 2008 Google Inc.  All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are
+   met:
+
+      * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+      * Redistributions in binary form must reproduce the above
+   copyright notice, this list of conditions and the following disclaimer
+   in the documentation and/or other materials provided with the
+   distribution.
+      * Neither the name of Google Inc. nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+   Code generated by the Protocol Buffer compiler is owned by the owner
+   of the input file used when generating it.  This code is not
+   standalone and requires a support library to be linked with it.  This
+   support library is itself covered by the above license.
+
+8. Licensee's use of pybind11 is subject to the terms and conditions of the 3-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (c) 2016 Wenzel Jakob <wenzel.jakob@epfl.ch>, All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice, this
+      list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+   3. Neither the name of the copyright holder nor the names of its contributors
+      may be used to endorse or promote products derived from this software
+      without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+   FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+   DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+   SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+   CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+   OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+9. Licensee's use of rapidjson is subject to the terms and conditions of the MIT license.
+   All third-party software packages are copyright by their respective authors.
+   The MIT license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (C) 2015 THL A29 Limited, a Tencent company, and Milo Yip.
+
+   Licensed under the MIT License (the "License"); you may not use this file except
+   in compliance with the License. You may obtain a copy of the License at
+
+   http://opensource.org/licenses/MIT
+
+   Unless required by applicable law or agreed to in writing, software distributed
+   under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations under the License.
+
+10. Licensee's use of PyTorch is subject to the terms and conditions of the 3-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   From PyTorch:
+
+   Copyright (c) 2016-     Facebook, Inc            (Adam Paszke)
+   Copyright (c) 2014-     Facebook, Inc            (Soumith Chintala)
+   Copyright (c) 2011-2014 Idiap Research Institute (Ronan Collobert)
+   Copyright (c) 2012-2014 Deepmind Technologies    (Koray Kavukcuoglu)
+   Copyright (c) 2011-2012 NEC Laboratories America (Koray Kavukcuoglu)
+   Copyright (c) 2011-2013 NYU                      (Clement Farabet)
+   Copyright (c) 2006-2010 NEC Laboratories America (Ronan Collobert, Leon Bottou, Iain Melvin, Jason Weston)
+   Copyright (c) 2006      Idiap Research Institute (Samy Bengio)
+   Copyright (c) 2001-2004 Idiap Research Institute (Ronan Collobert, Samy Bengio, Johnny Mariethoz)
+
+   From Caffe2:
+
+   Copyright (c) 2016-present, Facebook Inc. All rights reserved.
+
+   All contributions by Facebook:
+   Copyright (c) 2016 Facebook Inc.
+
+   All contributions by Google:
+   Copyright (c) 2015 Google Inc.
+   All rights reserved.
+
+   All contributions by Yangqing Jia:
+   Copyright (c) 2015 Yangqing Jia
+   All rights reserved.
+
+   All contributions by Kakao Brain:
+   Copyright 2019-2020 Kakao Brain
+
+   All contributions by Cruise LLC:
+   Copyright (c) 2022 Cruise LLC.
+   All rights reserved.
+
+   All contributions from Caffe:
+   Copyright(c) 2013, 2014, 2015, the respective contributors
+   All rights reserved.
+
+   All other contributions:
+   Copyright(c) 2015, 2016 the respective contributors
+   All rights reserved.
+
+   Caffe2 uses a copyright model similar to Caffe: each contributor holds
+   copyright over their contributions to Caffe2. The project versioning records
+   all such contribution and copyright details. If a contributor wants to further
+   mark their specific copyright on a particular contribution, they should
+   indicate their copyright solely in the commit message of the change when it is
+   committed.
+
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   3. Neither the names of Facebook, Deepmind Technologies, NYU, NEC Laboratories America
+      and IDIAP Research Institute nor the names of its contributors may be
+      used to endorse or promote products derived from this software without
+      specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+   POSSIBILITY OF SUCH DAMAGE.
+
+11. Licensee's use of curl/libcurl is subject to the terms and conditions of the MIT license.
+    All third-party software packages are copyright by their respective authors.
+    The MIT license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+
+   COPYRIGHT AND PERMISSION NOTICE
+
+   Copyright © 1996 - 2022, Daniel Stenberg, <daniel@haxx.se>, and many
+   contributors, see the THANKS file.
+
+   All rights reserved.
+
+   Permission to use, copy, modify, and distribute this software for any purpose
+   with or without fee is hereby granted, provided that the above copyright
+   notice and this permission notice appear in all copies.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+   NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+   OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+   OR OTHER DEALINGS IN THE SOFTWARE.
+
+   Except as contained in this notice, the name of a copyright holder shall not
+   be used in advertising or otherwise to promote the sale, use or other dealings
+   in this Software without prior written authorization of the copyright holder.
+
+12. Licensee's use of JSON for Modern C++ is subject to the terms and conditions of the MIT license.
+    All third-party software packages are copyright by their respective authors.
+    The MIT license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+
+   Copyright (c) 2013-2022 Niels Lohmann
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+13. Licensee's use of NVIDIA's Triton Inference Server is subject to the terms and conditions of the 3-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+   * Neither the name of NVIDIA CORPORATION nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+   EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+   PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+   OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+14. Licensee's use of the NVIDIA Triton Inference Server container image is subject to the terms and conditions of the NVIDIA Deep Learning Container License.
+   All third-party software packages are copyright by their respective authors.
+   The NVIDIA Deep Learning Container License terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the license can be found at: https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+15. Licensee's use of resnet50.tensorflow MLPerf Inference Reference Model is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+   https://github.com/mlperf/training/tree/master/image_classification, &
+   https://github.com/tensorflow/models/tree/master/official/resnet. (2019).
+   resnet50.tensorflow model (0.1). Zenodo. https://doi.org/10.5281/zenodo.2535873
+
+16. Licensee's use of OpenTelemetry C++ is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+17. Licensee's use of Mbed TLS is subject to the terms and conditions of the Apache 2.0 license.
+   All third-party software packages are copyright by their respective authors.
+   The Apache 2.0 license terms and conditions are hereby incorporated into the Agreement by this reference.
+   The full text of the Apache 2.0 license can be found at: https://www.apache.org/licenses/LICENSE-2.0
+
+13. Licensee's use of Google's gperftools is subject to the terms and conditions of the 3-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 3-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (c) 2005, Google Inc.
+
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are
+   met:
+
+       * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+       * Redistributions in binary form must reproduce the above
+   copyright notice, this list of conditions and the following disclaimer
+   in the documentation and/or other materials provided with the
+   distribution.
+       * Neither the name of Google Inc. nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+   OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+14. Licensee's use of libarchive is subject to the terms and conditions of the 2-clause BSD license.
+   All third-party software packages are copyright by their respective authors.
+   The 2-clause BSD license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (c) 2003-2018 <author(s)>
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+   1. Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer
+      in this position and unchanged.
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE AUTHOR(S) ``AS IS'' AND ANY EXPRESS OR
+   IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+   OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+   IN NO EVENT SHALL THE AUTHOR(S) BE LIABLE FOR ANY DIRECT, INDIRECT,
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+   NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+15. Licensee's use of libz is subject to the terms and conditions of the zlib license.
+   All third-party software packages are copyright by their respective authors.
+   The zlib license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+  Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Jean-loup Gailly        Mark Adler
+  jloup@gzip.org          madler@alumni.caltech.edu
+
+16. Licensee's use of libz is subject to the terms and conditions of the zlib license.
+   All third-party software packages are copyright by their respective authors.
+   The zlib license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+  Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Jean-loup Gailly        Mark Adler
+  jloup@gzip.org          madler@alumni.caltech.edu
+
+17. Licensee's use of Zstandard is subject to the terms and conditions of the Zstandard license.
+   All third-party software packages are copyright by their respective authors.
+   The Zstandard license terms and conditions are hereby incorporated into the Agreement by this reference.
+
+   Copyright (c) Meta Platforms, Inc. and affiliates. All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without modification,
+   are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright notice, this
+      list of conditions and the following disclaimer.
+
+   * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+   * Neither the name Facebook, nor Meta, nor the names of its contributors may
+      be used to endorse or promote products derived from this software without
+      specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+   ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

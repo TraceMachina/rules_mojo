@@ -1,0 +1,49 @@
+module(
+    name = "my_project",
+    version = "0",
+    compatibility_level = 0,
+)
+
+git_override(
+    module_name = "rules_ll",
+    # Note: Keep this commit in sync with the one in flake.nix.
+    commit = "5ac0546db310da08d44f14271066e0b159611c25",
+    remote = "https://github.com/eomii/rules_ll",
+)
+
+rules_ll_dependencies = use_extension(
+    "@rules_ll//ll:init.bzl",
+    "rules_ll_dependencies",
+)
+use_repo(
+    rules_ll_dependencies,
+    "local-remote-execution",
+)
+
+# Note: The pipe-through mechanism from rules_ll makes this actually LLVM~19.
+bazel_dep(name = "llvm-project-overlay", version = "17-init-bcr.3")
+
+# The llvm-project-overlay extension aggregates patches across all modules that
+# invoke it. This means that rules_ll's custom patches are applied implicitly.
+llvm_project_overlay = use_extension(
+    "@llvm-project-overlay//utils/bazel:extensions.bzl",
+    "llvm_project_overlay",
+)
+use_repo(
+    llvm_project_overlay,
+    "llvm-project",
+)
+
+register_toolchains("@rules_mojo//mojo:mojo_toolchain")
+
+bazel_dep(name = "platforms", version = "0.0.10")
+bazel_dep(name = "rules_ll", version = "0")
+
+rules_mojo_dependencies = use_extension(
+    "@rules_mojo//mojo:extensions.bzl",
+    "rules_mojo_dependencies",
+)
+use_repo(
+    rules_mojo_dependencies,
+    "mojo",
+)

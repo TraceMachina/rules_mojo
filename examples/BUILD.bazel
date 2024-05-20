@@ -1,0 +1,22 @@
+load("@rules_mojo//mojo:defs.bzl", "mojo_binary", "mojo_library", "mojo_test")
+
+# See `thirdparty/mojo.BUILD.bazel` for more complex examples.
+
+mojo_library(
+    name = "mypackage",
+    srcs = [
+        "mypackage/__init__.mojo",
+        "mypackage/mymodule.mojo",
+    ],
+)
+
+mojo_binary(
+    name = "hello",
+    srcs = ["hello.mojo"],
+    deps = [":mypackage"],
+)
+
+mojo_test(
+    name = "hello_world_test",
+    srcs = ["hello.mojo"],
+)
