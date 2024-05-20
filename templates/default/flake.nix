@@ -116,7 +116,7 @@
               };
             rules_mojo.settings.mojoEnv = rules_mojo.lib.defaultMojoEnv {
               inherit pkgs;
-              mojo-sdk = inputs.rules_mojo.packages.${system}.mojo-sdk;
+              mojo = inputs.rules_mojo.packages.${system}.mojo;
             };
             packages = {
               lre-mojo = rules_mojo.packages.${system}.lre-mojo;
@@ -125,7 +125,7 @@
             };
             devShells.default = pkgs.mkShell {
               nativeBuildInputs = [
-                rules_mojo.packages.${system}.mojo-sdk
+                rules_mojo.packages.${system}.mojo
                 rules_mojo.packages.${system}.lre-mojo-cluster
                 rules_mojo.packages.${system}.lre-kill-the-mojo
                 rules_mojo.packages.${system}.bazel

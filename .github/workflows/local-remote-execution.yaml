@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04]
+        os: [large-ubuntu-22.04]
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
@@ -52,4 +52,8 @@ jobs:
       - name: Run Mojo tests against the cluster
         run: |
           nix develop --impure --command \
-          bash -c "lre-bazel test --jobs=4 @mojo//... --verbose_failures"
+          bash -c "lre-bazel test \
+            --jobs=$(nproc) \
+            --keep_going \
+            --verbose_failures \
+              @mojo//..."
