@@ -129,10 +129,12 @@ def _mojo_library_impl(ctx):
         tools = [toolchain.symbolizer],
         use_default_shell_env = False,
         env = {
-            "PATH": toolchain.MOJO_CC_PATH,
-            "MODULAR_HOME": toolchain.MODULAR_HOME,
-            "MOJO_PYTHON_LIBRARY": toolchain.MOJO_PYTHON_LIBRARY,
-            "LLVM_SYMBOLIZER_PATH": toolchain.symbolizer.path,
+            # "PATH": toolchain.MOJO_CC_PATH,
+            # "MODULAR_HOME": toolchain.MODULAR_HOME,
+            # "LIBRARY_PATH": toolchain.MOJO_LIBRARY_PATH,
+            # "MOJO_PYTHON_LIBRARY": toolchain.MOJO_PYTHON_LIBRARY,
+            # "LLVM_SYMBOLIZER_PATH": toolchain.symbolizer.path,
+            # "LD_LIBRARY_PATH": toolchain.MOJO_LIBRARY_PATH,
         },
     )
 
@@ -197,11 +199,12 @@ def _mojo_binary_impl(ctx):
         tools = [toolchain.symbolizer],
         use_default_shell_env = False,
         env = {
-            "MODULAR_HOME": toolchain.MODULAR_HOME,
-            "PATH": toolchain.MOJO_CC_PATH,
-            "LIBRARY_PATH": toolchain.MOJO_LIBRARY_PATH,
-            "MOJO_PYTHON_LIBRARY": toolchain.MOJO_PYTHON_LIBRARY,
-            "LLVM_SYMBOLIZER_PATH": toolchain.symbolizer.path,
+            # "MODULAR_HOME": toolchain.MODULAR_HOME,
+            # "PATH": toolchain.MOJO_CC_PATH,
+            # "LIBRARY_PATH": toolchain.MOJO_LIBRARY_PATH,
+            # "LD_LIBRARY_PATH": toolchain.MOJO_LIBRARY_PATH,
+            # "MOJO_PYTHON_LIBRARY": toolchain.MOJO_PYTHON_LIBRARY,
+            # "LLVM_SYMBOLIZER_PATH": toolchain.symbolizer.path,
         },
     )
 

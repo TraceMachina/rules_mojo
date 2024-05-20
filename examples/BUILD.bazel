@@ -17,6 +17,7 @@ mojo_binary(
 )
 
 mojo_test(
-    name = "hello_world_test",
+    name = "hello_test",
     srcs = ["hello.mojo"],
+    deps = [":mypackage"],
 )

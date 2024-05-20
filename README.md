@@ -31,7 +31,7 @@ Brings Mojo to all Linux distributions.
   Also, the LRE framework is still actively under development (in fact,
   `rules_mojo` acts as a validation case for LRE), so expect larger scale
   refactors.
-- At the moment there is no way to chose the Mojo version. `rules_mojo` uses
+- At the moment there is no way to choose the Mojo version. `rules_mojo` uses
   a pinned `nightly` toolchain that happened to not crash because stable
   crashed.
 
