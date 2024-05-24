@@ -128,6 +128,8 @@ bazel run examples:hello
 You can test the remote execution capabilities of `rules_mojo` by spinning up
 the builtin Kubernetes cluster with a pre-configured NativeLink setup.
 
+![NativeLink LRE Mojo Cluster](https://raw.githubusercontent.com/TraceMachina/rules_mojo/510b54a9f9128ddab38dce0c27dc924e7d817e11/cluster-architecture.webp?raw=true)
+
 Make sure you have a recent version of Docker installed. Then you can invoke the
 following command from within the Nix flake:
 
