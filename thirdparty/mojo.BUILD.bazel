@@ -127,41 +127,41 @@ mojo_test(
 #                    potentially older host glibc on the local machine. Bundle
 #                    glibc to prevent these issues.
 #
-# # These make use of `__source_location` which hardcodes the absolute location of
-# # source files into target at compile time. Since sandboxes would be removed
-# # after building the tests, all `__source_location`s would be invalid, so we run
-# # them without sandboxing and with local execution. They're still cached
-# # remotely because we assume remote caches to auto-validate changes in these
-# # files.
-# [
-#     mojo_test(
-#         name = file.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
-#         srcs = [file],
-#         deps = [":stdlib"],
-#         tags = [
-#             "local",
-#             # "no-sandbox",
-#             # "no-remote-exec",
-#         ],
-#     )
-#     for file in [
-#         "stdlib/test/os/path/test_exists.mojo",
-#         "stdlib/test/os/path/test_isfile.mojo",
-#         "stdlib/test/os/test_stat.mojo",
-#     ]
-# ]
-#
-# mojo_test(
-#     name = "test_pathlib_test_pathlib",
-#     srcs = ["stdlib/test/pathlib/test_pathlib.mojo"],
-#     deps = [":stdlib"],
-#     defines = ["TEMP_FILE=tmp"],
-#     tags = [
-#         # Ideally, we'd have `["no-sandbox", "no-remote-exec"]`, meaning that
-#         # we'd have a remote build but local execution. That doesn't work since
-#         # the remote executor uses a different glibc than the host.
-#         "local",
-#         # "no-sandbox",
-#         # "no-remote-exec",
-#     ],
-# )
+# These make use of `__source_location` which hardcodes the absolute location of
+# source files into target at compile time. Since sandboxes would be removed
+# after building the tests, all `__source_location`s would be invalid, so we run
+# them without sandboxing and with local execution. They're still cached
+# remotely because we assume remote caches to auto-validate changes in these
+# files.
+[
+    mojo_test(
+        name = file.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
+        srcs = [file],
+        deps = [":stdlib"],
+        tags = [
+            "local",
+            # "no-sandbox",
+            # "no-remote-exec",
+        ],
+    )
+    for file in [
+        "stdlib/test/os/path/test_exists.mojo",
+        "stdlib/test/os/path/test_isfile.mojo",
+        "stdlib/test/os/test_stat.mojo",
+    ]
+]
+
+mojo_test(
+    name = "test_pathlib_test_pathlib",
+    srcs = ["stdlib/test/pathlib/test_pathlib.mojo"],
+    deps = [":stdlib"],
+    defines = ["TEMP_FILE=tmp"],
+    tags = [
+        # Ideally, we'd have `["no-sandbox", "no-remote-exec"]`, meaning that
+        # we'd have a remote build but local execution. That doesn't work since
+        # the remote executor uses a different glibc than the host.
+        "local",
+        # "no-sandbox",
+        # "no-remote-exec",
+    ],
+)

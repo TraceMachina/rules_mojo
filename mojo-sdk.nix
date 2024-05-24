@@ -50,8 +50,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ autoPatchelfHook zstd makeWrapper ];
 
-  # nativeBuildInputs = [ autoPatchelfHook zstd makeWrapper ];
-
   unpackPhase = ''
     zstd -d $src -c | tar xvf -
   '';
@@ -60,11 +58,6 @@ stdenv.mkDerivation rec {
     # Nixpkgs uses `libedit.so.0.0.72` for the version of libedit
     # that is `libedit.so.2.0.72` in Ubuntu.
     ln -s ${libedit}/lib/libedit.so.0 lib/libedit.so.2
-
-    # Brute-force copy tinfo into the same directory as the mojo sources.
-    # It appears that mojo can't figure out how to find libtinfo otherwise.
-    cp ${tinfo}/lib/libtinfo.so.6.4 lib/libtinfo.so.6.4
-    ln -s libtinfo.so.6.4 lib/libtinfo.so.6
 
     # The mojo command uses this config file to determine the
     # locations to bundled dependencies. Remap it to /nix/store.
@@ -87,9 +80,8 @@ stdenv.mkDerivation rec {
     #
     # WARNING: At the moment linking phase can't figure out how to link tinfo.
     # To work around this we allow leaving the tinfo symbols undefined and
-    # unlinked. This is a very risky and dangerous practice that might trigger
-    # random segfaults during runtime.
-    sed -i "s|system_libs = -lrt,-ldl,-lpthread,-lm,-lz,-ltinfo;|system_libs = -fuse-ld=mold,-lrt,-ldl,-lpthread,-lm,-L,${zlib}/lib,-Xlinker,-rpath=${zlib}/lib,-Xlinker,-L,${tinfo}/lib,-Xlinker,-rpath=${tinfo}/lib,-Xlinker,-rpath=${stdenv.cc.cc.lib}/lib,--verbose,-Xlinker,--verbose,-Xlinker,-v,-Xlinker,--allow-shlib-undefined,-Xlinker,--unresolved-symbols=ignore-all;|g" modular.cfg
+    # unlinked. This is a risky practice and might trigger segfaults at runtime.
+    sed -i "s|system_libs = -lrt,-ldl,-lpthread,-lm,-lz,-ltinfo;|system_libs = -fuse-ld=mold,-lrt,-ldl,-lpthread,-lm,-Xlinker,-rpath=${glibc}/lib,-L,${zlib}/lib,-Xlinker,-rpath=${zlib}/lib,-Xlinker,-L,${tinfo}/lib,-Xlinker,-rpath=${tinfo}/lib,-Xlinker,-rpath=${stdenv.cc.cc.lib}/lib,-Xlinker,--unresolved-symbols=ignore-in-object-files,--verbose;|g" modular.cfg
   '';
 
   installPhase = ''
@@ -108,11 +100,9 @@ stdenv.mkDerivation rec {
   postInstall = ''
     wrap_with_env() {
       wrapProgram $1 \
+        --set MODULAR_HOME $out \
         --prefix PATH : ${clang}/bin:${mold}/bin:${uutils-coreutils-noprefix}/bin \
-        --prefix MODULAR_HOME : $out \
-        --prefix LIBRARY_PATH : ${makeLibraryPath [ tinfo ncurses zlib stdenv.cc.cc.lib  ]} \
-        --prefix LD_LIBRARY_PATH : ${makeLibraryPath [ tinfo ncurses zlib stdenv.cc.cc.lib  ]} \
-        --set LD_LIBRARY_PATH ${makeLibraryPath [ tinfo ncurses zlib stdenv.cc.cc.lib ]}
+        --prefix LD_LIBRARY_PATH : ${makeLibraryPath [ tinfo ncurses zlib stdenv.cc.cc.lib glibc ]}
     }
 
     wrap_with_env $out/bin/mojo
