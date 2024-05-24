@@ -34,17 +34,21 @@
       # nixpkgs used by nativelink as the the "global" nixpkgs. We do this by
       # setting `nixpkgs.follows = "nativelink/nixpkgs"` above.
 
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+      };
     };
     rules_ll = {
       url = "github:eomii/rules_ll/5ac0546db310da08d44f14271066e0b159611c25";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-      inputs.nativelink.follows = "nativelink";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+        nativelink.follows = "nativelink";
+      };
     };
     nix2container = {
       follows = "nativelink/nix2container";
@@ -54,7 +58,6 @@
   outputs =
     { self
     , nixpkgs
-    , flake-utils
     , pre-commit-hooks
     , flake-parts
     , nativelink
@@ -81,17 +84,16 @@
           , ...
           }:
           let
+            inherit (inputs.nativelink.packages.${system}) native-cli lre-cc nativelink-debug;
+
             tinfo6-bin = pkgs.callPackage ./tinfo6-bin.nix { };
 
             ncurses6-bin = pkgs.callPackage ./ncurses6-bin.nix { };
-
-            native-cli = inputs.nativelink.packages.${system}.native-cli;
 
             lre-mojo-cluster = pkgs.callPackage ./local-remote-execution/lre-mojo-cluster.nix {
               inherit native-cli;
             };
 
-            lre-cc = nativelink.packages.${system}.lre-cc;
             inherit (nix2container.packages.${system}.nix2container) buildImage;
 
             mojo = pkgs.callPackage ./mojo.nix {
@@ -114,7 +116,7 @@
 
             createWorker = pkgs.callPackage ./local-remote-execution/create-worker.nix {
               inherit buildImage self;
-              nativelink = nativelink.packages.${system}.nativelink-debug;
+              nativelink = nativelink-debug;
             };
 
             bazel = pkgs.writeShellScriptBin "bazel" ''
@@ -139,7 +141,7 @@
             };
             rules_ll.settings.llEnv =
               let
-                openssl = (pkgs.openssl.override { static = true; });
+                openssl = pkgs.openssl.override { static = true; };
               in
               rules_ll.lib.defaultLlEnv {
                 inherit pkgs;
