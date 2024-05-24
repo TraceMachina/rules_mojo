@@ -2,7 +2,7 @@
 let
   inherit (lib) mkOption types;
 
-  inherit (pkgs) runCommand writeText git;
+  inherit (pkgs) runCommand git;
 
   processedActionEnvs = map (x: "build --@rules_mojo//mojo:" + x) config.mojoEnv;
 

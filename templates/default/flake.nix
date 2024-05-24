@@ -34,18 +34,22 @@
       # nixpkgs used by nativelink as the the "global" nixpkgs. We do this by
       # setting `nixpkgs.follows = "nativelink/nixpkgs"` above.
 
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+      };
     };
     rules_ll = {
       # Keep this commit in sync with the rules_ll commit in `MODULE.bazel`.
       url = "github:eomii/rules_ll/5ac0546db310da08d44f14271066e0b159611c25";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-      inputs.nativelink.follows = "nativelink";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+        nativelink.follows = "nativelink";
+      };
     };
     nix2container = {
       follows = "nativelink/nix2container";
@@ -53,25 +57,25 @@
     rules_mojo = {
       # Keep this commit in sync with the rules_mojo commit in `MODULE.bazel`
       url = "github:TraceMachina/rules_mojo/<TODO: Specify rules_mojo commit>";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-      inputs.nativelink.follows = "nativelink";
-      inputs.rules_ll.follows = "rules_ll";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+        nativelink.follows = "nativelink";
+        rules_ll.follows = "rules_ll";
+      };
     };
   };
 
   outputs =
     { self
     , nixpkgs
-    , flake-utils
     , pre-commit-hooks
     , flake-parts
     , nativelink
     , rules_ll
     , rules_mojo
-    , nix2container
     , ...
     } @ inputs:
     flake-parts.lib.mkFlake { inherit inputs; }
@@ -92,6 +96,9 @@
           , lib
           , ...
           }:
+          let
+            inherit (inputs.nativelink.packages.${system}) lre-cc;
+          in
           {
             _module.args.pkgs = import self.inputs.nixpkgs {
               inherit system;
@@ -100,14 +107,14 @@
               # config.cudaSupport = true;
             };
             local-remote-execution.settings = {
-              inherit (nativelink.packages.${system}.lre-cc.meta) Env;
+              inherit (lre-cc.meta) Env;
             };
             pre-commit.settings = {
               hooks = import ./pre-commit-hooks.nix { inherit pkgs; };
             };
             rules_ll.settings.llEnv =
               let
-                openssl = (pkgs.openssl.override { static = true; });
+                openssl = pkgs.openssl.override { static = true; };
               in
               rules_ll.lib.defaultLlEnv {
                 inherit pkgs;
@@ -116,12 +123,12 @@
               };
             rules_mojo.settings.mojoEnv = rules_mojo.lib.defaultMojoEnv {
               inherit pkgs;
-              mojo = inputs.rules_mojo.packages.${system}.mojo;
+              inherit (inputs.rules_mojo.packages.${system}) mojo;
             };
             packages = {
-              lre-mojo = rules_mojo.packages.${system}.lre-mojo;
-              lre-cc = nativelink.packages.${system}.lre-cc;
-              nativelink-worker-lre-mojo = rules_mojo.packages.${system}.lre-mojo;
+              inherit lre-cc;
+              inherit (inputs.rules_mojo.packages.${system}) lre-mojo;
+              nativelink-worker-lre-mojo = lre-mojo;
             };
             devShells.default = pkgs.mkShell {
               nativeBuildInputs = [

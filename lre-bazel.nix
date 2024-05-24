@@ -4,14 +4,6 @@
 , ...
 }:
 
-let
-  # The specific commit to use
-  nativelinkCommit = "75105df746c626da76f74e412764e6755296a8ab";
-
-  # Base URL for GitHub access
-  githubBaseUrl = "github:TraceMachina/nativelink/";
-in
-
 writeShellScriptBin "lre-bazel" ''
   EXECUTOR=$(${kubectl}/bin/kubectl get gtw scheduler -o=jsonpath='{.status.addresses[0].value}')
   CACHE=$(${kubectl}/bin/kubectl get gtw cache -o=jsonpath='{.status.addresses[0].value}')
