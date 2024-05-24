@@ -32,14 +32,14 @@ in
 
         ```nix
         mojoEnv = [
-          "MOJO_COMPILER=''${mojo-sdk}/bin/mojo"
+          "MOJO_COMPILER=''${mojo}/bin/mojo"
         ]
         ```
 
         results in the following line in `.bazelrc.ll`:
 
         ```bash
-        build --@rules_mojo//mojo:MOJO_COMPILER=''${mojo-sdk}/bin/mojo
+        build --@rules_mojo//mojo:MOJO_COMPILER=''${mojo}/bin/mojo
         ```
 
         Supported values are:

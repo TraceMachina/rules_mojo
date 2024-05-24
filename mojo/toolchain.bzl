@@ -11,7 +11,7 @@ def _mojo_toolchain_impl(ctx):
             MODULAR_HOME = ctx.attr.MODULAR_HOME[BuildSettingInfo].value,
             MOJO_COMPILER = ctx.attr.MOJO_COMPILER[BuildSettingInfo].value,
             MOJO_CC_PATH = ctx.attr.MOJO_CC_PATH[BuildSettingInfo].value,
-            MOJO_LIBRARY_PATH = ctx.attr.MOJO_LIBRARY_PATH[BuildSettingInfo].value,
+            LD_LIBRARY_PATH = ctx.attr.LD_LIBRARY_PATH[BuildSettingInfo].value,
             MOJO_PYTHON_LIBRARY = ctx.attr.MOJO_PYTHON_LIBRARY[BuildSettingInfo].value,
             symbolizer = ctx.executable.symbolizer,
         ),
@@ -29,7 +29,7 @@ mojo_toolchain = rule(
             doc = "The path to the mojo compiler.",
         ),
         "MOJO_CC_PATH": attr.label(),
-        "MOJO_LIBRARY_PATH": attr.label(),
+        "LD_LIBRARY_PATH": attr.label(),
         "MOJO_PYTHON_LIBRARY": attr.label(),
         "symbolizer": attr.label(
             doc = "The `llvm-symbolizer`.",

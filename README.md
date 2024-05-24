@@ -1,8 +1,12 @@
 # `rules_mojo` 🔥
 
-Hermetic, reproducible Bazel/Nix rules for Mojo 🔥.
+Hermetic, reproducible Bazel/Nix rules for Mojo 🔥
 
 Brings Mojo to all Linux distributions.
+
+```bash
+nix run github:TraceMachina/rules_mojo#mojo
+```
 
 ✨ **Features**:
 
@@ -17,6 +21,12 @@ Brings Mojo to all Linux distributions.
   which lets you execute builds in arbitrarily scalable Kubernetes clusters.
   Whether you want to run a build on 1000 cores or just share your build cache
   among friends, the NativeLink+LRE infrastructure supports it.
+- A bundled Clang/LLVM C++ toolchain with the [mold](https://github.com/rui314/mold)
+  linker and [uutils](https://github.com/uutils/coreutils), the Rust rewrite of
+  coreutils. This toolchain links Mojo executables up to two orders of magnitude
+  faster than a standard C++ toolchain.
+- Pretty compiler crash stack traces, powered by the `llvm-symbolizer` built
+  from upstream LLVM sources.
 
 🔮 **Coming soon™**:
 
@@ -31,14 +41,25 @@ Brings Mojo to all Linux distributions.
   Also, the LRE framework is still actively under development (in fact,
   `rules_mojo` acts as a validation case for LRE), so expect larger scale
   refactors.
-- At the moment there is no way to chose the Mojo version. `rules_mojo` uses
+- At the moment there is no way to choose the Mojo version. `rules_mojo` uses
   a pinned `nightly` toolchain that happened to not crash because stable
   crashed.
+- The toolchain links all executables to dynamic libraries from `nixpkgs`.
+  This brings potential performance improvements from recent `glibc` and
+  `libstdc++` versions, but makes the executables incompatible with systems that
+  don't have these libraries present. You can attempt to rewrite the `RPATH`s
+  with [patchelf](https://github.com/NixOS/patchelf), but you might run into
+  `glibc` version incompatibility issues on non-bleeding-edge systems.
+- The dynamic loader `ld-linux-x86_64.so.2` isn't set to the Nix variant.
+  This lets you run `rules_mojo`-built executables outside of the nix
+  environment. However, on older systems the version mismatch between the
+  dynamic loader and the nix-based `glibc` might lead to issues. When in doubt,
+  use `ldd <path/to/executable>` to double-check the dynamic dependency
+  resolution.
 
 🦋 **Known bugs**:
 
 - While you can build tests remotely, you need to run them locally.
-- The Mojo REPL doesn't work yet due to an `ncurses` linker symbol mismatch.
 - All mojo invocations print `crashdb` warnings because it's unclear how to
   configure the `crashdb` output location to point outside of the nix store.
 
@@ -68,12 +89,33 @@ direnv allow
 > If you don't want to use `direnv` you can use `nix develop` manually which is
 > the command that `direnv` would automatically call for you.
 
-The Mojo standard library is convenience test target for `rules_mojo`. To run
-all tests:
+Inside the Nix environment you'll have access to the `mojo` command:
+
+```bash
+# The mojo REPL.
+mojo
+
+# Build a mojo executable.
+mojo build examples/hello.mojo
+
+# Build a mojo package.
+mojo package examples/mypackage
+
+# Invoke the nix-packaged `mojo` executable
+# outside of the `rules_mojo` repository:
+nix run github:TraceMachina/rules_mojo#mojo
+```
+
+To test the `mojo_toolchain` with Bazel, run the Mojo standard library test
+suite:
 
 ```bash
 bazel test @mojo//...
 ```
+
+> [!TIP]
+> Check out [`thirdparty/mojo.BUILD.bazel`](./thirdparty/mojo.BUILD.bazel) for
+> the build file of this target.
 
 To run the example in the `examples` directory:
 
@@ -148,5 +190,5 @@ nix flake init -t github:TraceMachina/rules_mojo
 
 Licensed under the Apache 2.0 License with LLVM exceptions.
 
-This repository wraps the Mojo SDK which is under a proprietary license, bundled
-with the Mojo SDK and also available in the `licenses` directory.
+This repository wraps the Modular Mojo SDK which is under a proprietary license,
+bundled with the SDK and also available in the `licenses` directory.

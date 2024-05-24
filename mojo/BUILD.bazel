@@ -13,7 +13,7 @@ load("//mojo:toolchain.bzl", "mojo_toolchain")
         "MODULAR_HOME",
         "MOJO_COMPILER",
         "MOJO_CC_PATH",
-        "MOJO_LIBRARY_PATH",
+        "LD_LIBRARY_PATH",
         "MOJO_PYTHON_LIBRARY",
 
         # Unset values default to an empty string.
@@ -25,10 +25,10 @@ toolchain_type(name = "toolchain_type")
 
 mojo_toolchain(
     name = "mojo_toolchain_x86_64-unknown-linux-gnu",
+    LD_LIBRARY_PATH = ":LD_LIBRARY_PATH",
     MODULAR_HOME = ":MODULAR_HOME",
     MOJO_CC_PATH = ":MOJO_CC_PATH",
     MOJO_COMPILER = ":MOJO_COMPILER",
-    MOJO_LIBRARY_PATH = ":MOJO_LIBRARY_PATH",
     MOJO_PYTHON_LIBRARY = ":MOJO_PYTHON_LIBRARY",
     visibility = ["//visibility:public"],
 )

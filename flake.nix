@@ -81,59 +81,38 @@
           , ...
           }:
           let
+            tinfo6-bin = pkgs.callPackage ./tinfo6-bin.nix { };
+
+            ncurses6-bin = pkgs.callPackage ./ncurses6-bin.nix { };
+
             native-cli = inputs.nativelink.packages.${system}.native-cli;
 
-            lre-mojo-cluster = import ./local-remote-execution/lre-mojo-cluster.nix {
+            lre-mojo-cluster = pkgs.callPackage ./local-remote-execution/lre-mojo-cluster.nix {
               inherit native-cli;
-              inherit (pkgs)
-                curl
-                git
-                kubectl
-                kustomize
-                nix
-                writeShellScriptBin;
             };
 
             lre-cc = nativelink.packages.${system}.lre-cc;
             inherit (nix2container.packages.${system}.nix2container) buildImage;
 
-            mojo-sdk = import ./mojo-sdk.nix {
-              inherit (pkgs)
-                autoPatchelfHook
-                fetchurl
-                glibc
-                icu
-                libedit
-                libgcc
-                libxml2
-                ncurses
-                stdenv
-                zlib
-                zstd;
+            mojo = pkgs.callPackage ./mojo.nix {
+              inherit (pkgs.lib) makeBinPath makeLibraryPath;
+              inherit (pkgs.llvmPackages_18) clang;
+              ncurses = ncurses6-bin;
+              tinfo = tinfo6-bin;
             };
 
-            lre-mojo = import ./local-remote-execution/lre-mojo.nix {
-              inherit (pkgs)
-                gcc
-                lib
-                ncurses
-                python312
-                zlib;
-              inherit buildImage lre-cc mojo-sdk;
+            lre-mojo = pkgs.callPackage ./local-remote-execution/lre-mojo.nix {
+              # ncurses = ncurses6-bin;
+              # tinfo = ncurses6-bin;
+              mojoEnv = self.lib.defaultMojoEnv {
+                inherit pkgs mojo;
+              };
+              inherit buildImage lre-cc;
             };
 
-            lre-kill-the-mojo = import ./local-remote-execution/lre-kill-the-mojo.nix {
-              inherit (pkgs) docker findutils kind writeShellScriptBin;
-            };
+            lre-kill-the-mojo = pkgs.callPackage ./local-remote-execution/lre-kill-the-mojo.nix { };
 
-            createWorker = import ./local-remote-execution/create-worker.nix {
-              inherit (pkgs)
-                bash
-                buildEnv
-                coreutils
-                lib
-                runCommand
-                runtimeShell;
+            createWorker = pkgs.callPackage ./local-remote-execution/create-worker.nix {
               inherit buildImage self;
               nativelink = nativelink.packages.${system}.nativelink-debug;
             };
@@ -143,11 +122,7 @@
               exec ${pkgs.bazelisk}/bin/bazelisk "$@"
             '';
 
-            lre-bazel = import ./lre-bazel.nix {
-              inherit bazel;
-              inherit (pkgs) kubectl writeShellScriptBin;
-            };
-
+            lre-bazel = pkgs.callPackage ./lre-bazel.nix { inherit bazel; };
           in
           {
             _module.args.pkgs = import self.inputs.nixpkgs {
@@ -172,21 +147,20 @@
                 LL_LDFLAGS = "-L${openssl.out}/lib";
               };
             rules_mojo.settings.mojoEnv = self.lib.defaultMojoEnv {
-              inherit pkgs mojo-sdk;
+              inherit pkgs mojo;
             };
             packages = {
-              inherit lre-mojo lre-cc mojo-sdk lre-mojo-cluster lre-kill-the-mojo bazel lre-bazel;
+              inherit lre-mojo lre-cc mojo lre-mojo-cluster lre-kill-the-mojo bazel lre-bazel;
               nativelink-worker-lre-mojo = createWorker lre-mojo;
             };
             devShells.default = pkgs.mkShell {
               nativeBuildInputs = [
-                mojo-sdk
+                mojo
                 lre-mojo-cluster
                 lre-kill-the-mojo
                 bazel
                 lre-bazel
                 pkgs.kubectl
-                pkgs.zlib
                 pkgs.python312
                 pkgs.tektoncd-cli
                 pkgs.kind

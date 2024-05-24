@@ -2,3 +2,6 @@ Bazel
 [Ee]xecution
 [Tt]oolchain
 LLVM
+uutils
+patchelf
+coreutils

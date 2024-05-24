@@ -132,10 +132,7 @@ mojo_test(
         name = file.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
         srcs = [file],
         deps = [":stdlib"],
-        tags = [
-            "no-sandbox",
-            "no-remote-exec",
-        ],
+        tags = ["local"],
     )
     for file in [
         "stdlib/test/os/path/test_exists.mojo",
@@ -149,8 +146,5 @@ mojo_test(
     srcs = ["stdlib/test/pathlib/test_pathlib.mojo"],
     deps = [":stdlib"],
     defines = ["TEMP_FILE=tmp"],
-    tags = [
-        "no-sandbox",
-        "no-remote-exec",
-    ],
+    tags = ["local"],
 )

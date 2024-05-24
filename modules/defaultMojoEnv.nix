@@ -1,12 +1,11 @@
-{ pkgs, mojo-sdk, ... }:
+{ pkgs, mojo, ... }:
 
 [
-  "MODULAR_HOME=${mojo-sdk}"
-  "MOJO_COMPILER=${mojo-sdk}/bin/mojo"
-  "MOJO_CC_PATH=${pkgs.gcc}/bin:${mojo-sdk}/bin"
-  "MOJO_LIBRARY_PATH=${pkgs.zlib}/lib:${pkgs.ncurses}/lib"
+  "MODULAR_HOME=${mojo}"
+  "MOJO_COMPILER=${mojo}/bin/mojo"
+  "MOJO_CC_PATH=${pkgs.lib.makeBinPath mojo.passthru.mojoBinPath}"
+  "LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath mojo.passthru.mojoLibraryPath}"
 
-  # TODO(aaronmondal): This needs to be set during runtime. Let's just add it to
-  #                    a mojo wrapper script.
+  # TODO(aaronmondal): This needs to be set during runtime.
   # "MOJO_PYTHON_LIBRARY=${pkgs.python312}/lib/libpython3.12.so.1.0"
 ]
