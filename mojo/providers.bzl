@@ -1,4 +1,8 @@
-"""# `//mojo:providers.bzl`
+"""
+---
+title: //mojo:providers.bzl
+description: Providers for the `mojo_binary` and `mojo_library` rules.
+---
 
 Providers for the `mojo_binary` and `mojo_library` rules.
 """

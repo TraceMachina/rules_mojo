@@ -1,4 +1,8 @@
-"""# `//mojo:attributes.bzl`
+"""
+---
+title: //mojo:attributes.bzl
+description: Attributes used by `mojo_*` rules.
+---
 
 Attributes used by `mojo_*` rules.
 """

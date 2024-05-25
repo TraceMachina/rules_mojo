@@ -72,7 +72,9 @@
   # Markdown
   markdownlint = {
     enable = true;
-    excludes = [ "^(licenses/|.github/styles/)" ];
+    excludes = [
+      "^(licenses/|.github/styles/|docs/src/content/docs/reference/|docs/src/content/docs/rules/)"
+    ];
     types = [ "markdown" ];
   };
 

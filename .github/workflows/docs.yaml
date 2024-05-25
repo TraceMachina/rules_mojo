@@ -1,0 +1,37 @@
+---
+name: 🩺 Docs
+
+"on":
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: >- # v4.1.6
+          actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+
+      - name: Build
+        uses: >- # v2
+          withastro/action@acfe56dffc635abfb9506c77d51ce097030360d1
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: >- # v4.0.5
+          actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

@@ -1,4 +1,8 @@
-"""# `//mojo:defs.bzl`
+"""
+---
+title: //mojo:defs.bzl
+description: The Bazel rules for Mojo.
+---
 
 Import these rules in your `BUILD.bazel` files.
 

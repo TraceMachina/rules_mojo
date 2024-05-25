@@ -4,6 +4,8 @@ module(
     compatibility_level = 0,
 )
 
+bazel_dep(name = "bazel_skylib", version = "1.6.1", dev_dependency = True)
+
 git_override(
     module_name = "rules_ll",
     # Note: Keep this commit in sync with the one in flake.nix.
@@ -47,3 +49,6 @@ use_repo(
     rules_mojo_dependencies,
     "mojo",
 )
+
+# Documentation.
+bazel_dep(name = "stardoc", version = "0.6.2", dev_dependency = True)

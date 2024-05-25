@@ -1,4 +1,8 @@
-"""# `//mojo:toolchain.bzl`
+"""
+---
+title: //mojo:toolchain.bzl
+description: This file declares the `mojo_toolchain` rule.
+---
 
 This file declares the `mojo_toolchain` rule.
 """
