@@ -104,8 +104,6 @@
             };
 
             lre-mojo = pkgs.callPackage ./local-remote-execution/lre-mojo.nix {
-              # ncurses = ncurses6-bin;
-              # tinfo = ncurses6-bin;
               mojoEnv = self.lib.defaultMojoEnv {
                 inherit pkgs mojo;
               };
@@ -118,6 +116,28 @@
               inherit buildImage self;
               nativelink = nativelink-debug;
             };
+
+            docs = pkgs.writeShellScriptBin "docs" ''
+              SRC_ROOT=$(git rev-parse --show-toplevel)
+
+              bazel build @rules_mojo//mojo:docs || exit
+              chmod 644 $SRC_ROOT/bazel-bin/mojo/*.md
+              cp $SRC_ROOT/bazel-bin/mojo/*.md $SRC_ROOT/docs/src/content/docs/reference/
+              cp $SRC_ROOT/bazel-bin/mojo/defs.md $SRC_ROOT/docs/src/content/docs/rules/
+
+              # Rerun the pre-commit hooks so that we do not need to stage everything twice.
+              git add docs
+              pre-commit run --all-files
+              git add docs
+
+              # Technically unnecessary, but we want to show users whether all tests pass.
+              printf '
+              **************************
+              RERUNNING PRE-COMMIT HOOKS
+              **************************
+              '
+              pre-commit run --all-files
+            '';
 
             bazel = pkgs.writeShellScriptBin "bazel" ''
               unset TMPDIR TMP
@@ -157,16 +177,18 @@
             };
             devShells.default = pkgs.mkShell {
               nativeBuildInputs = [
-                mojo
-                lre-mojo-cluster
-                lre-kill-the-mojo
                 bazel
+                docs
                 lre-bazel
+                lre-kill-the-mojo
+                lre-mojo-cluster
+                mojo
                 pkgs.kubectl
                 pkgs.python312
                 pkgs.tektoncd-cli
                 pkgs.kind
                 pkgs.vale
+                pkgs.bun
               ];
 
               shellHook = ''

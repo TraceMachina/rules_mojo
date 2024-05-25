@@ -19,8 +19,8 @@ nix run github:TraceMachina/rules_mojo#mojo
 - Integration with [NativeLink](https://github.com/TraceMachina/nativelink) and
   [Local Remote Execution (LRE)](https://github.com/TraceMachina/nativelink/tree/main/local-remote-execution)
   which lets you execute builds in arbitrarily scalable Kubernetes clusters.
-  Whether you want to run a build on 1000 cores or just share your build cache
-  among friends, the NativeLink+LRE infrastructure supports it.
+  Whether you want to build on 1000 cores or run executables on edge networks
+  across the world, the NativeLink+LRE infrastructure supports it.
 - A bundled Clang/LLVM C++ toolchain with the [mold](https://github.com/rui314/mold)
   linker and [uutils](https://github.com/uutils/coreutils), the Rust rewrite of
   coreutils. This toolchain links Mojo executables up to two orders of magnitude
@@ -72,9 +72,12 @@ Install [`direnv`](https://direnv.net/) and add the `direnv hook` to your
 `.bashrc`:
 
 ```bash
-nix profile add nixpkgs#direnv
-echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+nix profile install nixpkgs#direnv
+
 # For hooks into shells other than bash see https://direnv.net/docs/hook.html.
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+
+source ~/.bashrc
 ```
 
 Now clone `rules_mojo`, `cd` into it and run `direnv allow`:

@@ -1,4 +1,8 @@
-"""# `//mojo:extensions.bzl`
+"""
+---
+title: `//mojo:extensions.bzl`
+description: Bazel module extensions used by `rules_mojo`.
+---
 
 Bazel module extensions used by `rules_mojo`.
 """

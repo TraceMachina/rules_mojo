@@ -1,7 +1,58 @@
 "Central build file for the docs, platforms, toolchains and config settings."
 
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("@stardoc//stardoc:stardoc.bzl", "stardoc")
 load("//mojo:toolchain.bzl", "mojo_toolchain")
+
+MOJO_MODULES = [
+    "args",
+    # "attributes", Doesn't contain symbols.
+    "defs",
+    # "extensions", Broken?
+    "mojo",
+    "providers",
+    "resolve_rule_inputs",
+    "toolchain",
+]
+
+bzl_library(
+    name = "mojo_bzl",
+    srcs = [
+        "{}.bzl".format(name)
+        for name in MOJO_MODULES
+    ],
+    deps = [
+        "@bazel_skylib//lib:dicts",
+        "@bazel_skylib//lib:paths",
+        "@bazel_skylib//rules:common_settings",
+    ],
+)
+
+[
+    stardoc(
+        name = "{}_docs".format(name),
+        out = "{}.md".format(name),
+        func_template = "templates/function_template.vm",
+        header_template = "templates/header_template.vm",
+        input = "{}.bzl".format(name),
+        provider_template = "templates/provider_template.vm",
+        rule_template = "templates/rule_template.vm",
+        deps = [
+            ":mojo_bzl",
+            "//mojo:attributes.bzl",
+        ],
+    )
+    for name in MOJO_MODULES
+]
+
+filegroup(
+    name = "docs",
+    srcs = [
+        ":{}_docs".format(name)
+        for name in MOJO_MODULES
+    ],
+)
 
 [
     string_flag(

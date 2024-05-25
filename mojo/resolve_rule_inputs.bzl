@@ -1,7 +1,14 @@
-"""# `//mojo:resolve_rule_inputs.bzl`
+"""
+---
+title: //mojo:resolve_rule_inputs.bzl
+description: Resolve the inputs to `mojo_library` and `mojo_binary` rules.
+---
 
 Resolve the inputs to `mojo_library` and `mojo_binary` rules.
 """
+
+load("@bazel_skylib//lib:paths.bzl", "paths")
+load("//mojo:providers.bzl", "MojoInfo")
 
 def expand_includes(ctx, include_string):
     """Prefix `include_string` with the path to the workspace root.

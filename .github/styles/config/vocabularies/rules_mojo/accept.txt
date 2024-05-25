@@ -1,7 +1,10 @@
+Args
 Bazel
+[Cc]ompilable
 [Ee]xecution
 [Tt]oolchain
 LLVM
+Skylib
 uutils
 patchelf
 coreutils

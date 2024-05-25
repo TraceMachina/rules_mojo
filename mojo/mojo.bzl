@@ -1,6 +1,8 @@
-"""# `//mojo:mojo.bzl`
-
-Rules to build Mojo.
+"""
+---
+title: //mojo:mojo.bzl
+description: Internal definition of the Mojo rules.
+---
 
 Build files should import these rules from `@rules_mojo//mojo:defs.bzl`.
 """
@@ -83,7 +85,7 @@ def find_package_dir(ctx):
             __init__.mojo
     ```
 
-    The final output will be "mypackage".
+    you'll get an output package `mypackage.mojopkg`.
 
     Args:
         ctx: The rule context.
@@ -158,7 +160,10 @@ Example:
   ```python
   mojo_library(
       name = "mypackage",
-      srcs = ["my_package.mojo"],
+      srcs = [
+          "__init__.mojo",
+          "my_package.mojo",
+      ],
   )
   ```
 """,
@@ -237,7 +242,7 @@ mojo_test = rule(
     doc = """
 Testable wrapper around `mojo_binary`.
 
-Consider using this rule over skylib's `native_test` targets to propagate shared
+Consider using this rule over Skylib's `native_test` targets to propagate shared
 libraries to the test invocations.
 
 Example:

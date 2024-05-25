@@ -1,4 +1,8 @@
-"""# `//mojo:args.bzl`
+"""
+---
+title: //mojo:args.bzl
+description: Arguments for actions.
+---
 
 Arguments for actions.
 """
@@ -17,8 +21,8 @@ def mojo_action_args(
     Args:
         ctx: The rule context.
         command: The command to pass to mojo. Either `"build"` or `"package"`.
-        input: The input to the command. This should be a file for `"build"` and
-            a directory for `"package"`.
+        input: The input to the command. A file for `command = "build"` and a
+            directory for `command = "package"`.
         out_file: The output file.
         includes: Extra include directory paths.
         defines: Extra defines in the form of `a=b`.
