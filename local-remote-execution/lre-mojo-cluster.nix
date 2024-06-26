@@ -10,7 +10,7 @@
 
 let
   # The specific commit to use
-  nativelinkCommit = "75105df746c626da76f74e412764e6755296a8ab";
+  nativelinkCommit = "9ba43236cf61737cd9561a1657ee50686b459966";
 
   # Base URL for GitHub access
   githubBaseUrl = "github:TraceMachina/nativelink/";
@@ -24,26 +24,27 @@ writeShellScriptBin "lre-mojo-cluster" ''
 
   # Wait for the gateway to be ready
   ${kubectl}/bin/kubectl wait --for=condition=Programmed --timeout=60s \
-    gateway eventlistener
+    gateway el-gateway
 
   # Allow an additional grace period for potential routes to set themselves up.
   # TODO(aaronmondal): Find a better solution.
   sleep 10
 
-  # Retrieve the event listener address
-  EVENTLISTENER=''$(${kubectl}/bin/kubectl get gtw eventlistener \
-    -o=jsonpath='{.status.addresses[0].value}')
-
   # POST requests to the event listener
   ${curl}/bin/curl -v \
     -H 'Content-Type: application/json' \
     -d '{"flakeOutput": "${githubBaseUrl}${nativelinkCommit}#image"}' \
-    http://"''${EVENTLISTENER}":8080
+    localhost:8082/eventlistener
+
+  ${curl}/bin/curl -v \
+    -H 'Content-Type: application/json' \
+    -d '{"flakeOutput": "${githubBaseUrl}${nativelinkCommit}#nativelink-worker-init"}' \
+    localhost:8082/eventlistener
 
   ${curl}/bin/curl -v \
     -H 'Content-Type: application/json' \
     -d '{"flakeOutput": "./src_root#nativelink-worker-lre-mojo"}' \
-    http://"''${EVENTLISTENER}":8080
+    localhost:8082/eventlistener
 
   # Wait for PipelineRuns to start
   until ${kubectl}/bin/kubectl get pipelinerun \
@@ -75,6 +76,7 @@ writeShellScriptBin "lre-mojo-cluster" ''
   # Use kustomize to set images
   cd "''${KUSTOMIZE_DIR}" && ${kustomize}/bin/kustomize edit set image \
     nativelink=localhost:5001/nativelink:"''$(${nix}/bin/nix eval ${githubBaseUrl}${nativelinkCommit}#image.imageTag --raw)" \
+    nativelink-worker-init=localhost:5001/nativelink-worker-init:"''$(${nix}/bin/nix eval ${githubBaseUrl}${nativelinkCommit}#nativelink-worker-init.imageTag --raw)" \
     nativelink-worker-lre-mojo=localhost:5001/nativelink-worker-lre-mojo:"''$(${nix}/bin/nix eval .#nativelink-worker-lre-mojo.imageTag --raw)"
 
   # Apply the configuration

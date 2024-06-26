@@ -4,22 +4,23 @@ module(
     compatibility_level = 0,
 )
 
-bazel_dep(name = "bazel_skylib", version = "1.6.1", dev_dependency = True)
+bazel_dep(name = "bazel_skylib", version = "1.7.1", dev_dependency = True)
 
 git_override(
     module_name = "rules_ll",
     # Note: Keep this commit in sync with the one in flake.nix.
-    commit = "5ac0546db310da08d44f14271066e0b159611c25",
+    commit = "a8a26cc78c43896b179caaa263857bd6c88a1da9",
     remote = "https://github.com/eomii/rules_ll",
 )
 
-rules_ll_dependencies = use_extension(
-    "@rules_ll//ll:init.bzl",
-    "rules_ll_dependencies",
-)
-use_repo(
-    rules_ll_dependencies,
-    "local-remote-execution",
+bazel_dep(name = "local-remote-execution", version = "0")
+archive_override(
+    module_name = "local-remote-execution",
+    integrity = "sha256-nWJ6XlV9YT1MSbLur6ygZ7IDaqHInm9mtwUmjRYqLQo=",
+    strip_prefix = "nativelink-2adda2475eed578d610a66b98f965922656061af/local-remote-execution",
+    urls = [
+        "https://github.com/TraceMachina/nativelink/archive/2adda2475eed578d610a66b98f965922656061af.zip",
+    ],
 )
 
 # Note: The pipe-through mechanism from rules_ll makes this actually LLVM~19.
@@ -51,4 +52,4 @@ use_repo(
 )
 
 # Documentation.
-bazel_dep(name = "stardoc", version = "0.6.2", dev_dependency = True)
+bazel_dep(name = "stardoc", version = "0.7.0", dev_dependency = True)

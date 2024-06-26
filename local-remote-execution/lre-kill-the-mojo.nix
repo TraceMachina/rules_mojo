@@ -12,4 +12,7 @@ writeShellScriptBin "lre-kill-the-mojo" ''
 
   ${docker}/bin/docker container stop kind-registry \
     | ${findutils}/bin/xargs docker rm
+
+  ${docker}/bin/docker container stop kind-loadbalancer \
+    | ${findutils}/bin/xargs docker rm
 ''
