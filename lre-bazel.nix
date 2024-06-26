@@ -5,8 +5,8 @@
 }:
 
 writeShellScriptBin "lre-bazel" ''
-  EXECUTOR=$(${kubectl}/bin/kubectl get gtw scheduler -o=jsonpath='{.status.addresses[0].value}')
-  CACHE=$(${kubectl}/bin/kubectl get gtw cache -o=jsonpath='{.status.addresses[0].value}')
+  EXECUTOR=$(${kubectl}/bin/kubectl get gtw scheduler-gateway -o=jsonpath='{.status.addresses[0].value}')
+  CACHE=$(${kubectl}/bin/kubectl get gtw cache-gateway -o=jsonpath='{.status.addresses[0].value}')
 
   if [[
       "$1" == "build" ||
@@ -18,8 +18,8 @@ writeShellScriptBin "lre-bazel" ''
       ${bazel}/bin/bazel $1 \
           --remote_timeout=600 \
           --remote_instance_name=main \
-          --remote_cache=grpc://''${CACHE}:50051 \
-          --remote_executor=grpc://''${EXECUTOR}:50052 \
+          --remote_cache=grpc://''${CACHE} \
+          --remote_executor=grpc://''${EXECUTOR} \
           --strategy=TestRunner=local \
           ''${@:2}
   else

@@ -146,12 +146,7 @@ setup.
 
 The setup may take a minute to boot up. When running the command the first time
 it might take some time to build NativeLink from source inside the cluster
-pipelines. Once the command finishes you can invoke the following command to run
-a local dashboard:
-
-```bash
-kubectl -n kube-system port-forward svc/hubble-ui 8080:80
-```
+pipelines.
 
 Visit <http://localhost:8080/?namespace=default> to view the cluster topology.
 

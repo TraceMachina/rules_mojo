@@ -1,7 +1,4 @@
-{
-  # pkgs,
-  nativelink
-, buildImage
+{ buildImage
 , self
 , runCommand
 , runtimeShell
@@ -89,7 +86,7 @@ buildImage {
     mkEnvSymlink
     (buildEnv {
       name = "${image.imageName}-buildEnv";
-      paths = [ nativelink coreutils bash ];
+      paths = [ coreutils bash ];
       pathsToLink = [ "/bin" ];
     })
   ];
