@@ -7,7 +7,6 @@ name: 🔥 Test Mojo Standard library
   pull_request:
     branches: [main]
 
-permissions: read-all
 
 jobs:
   stdlib-tests:
@@ -18,7 +17,16 @@ jobs:
         os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    permissions:
+      id-token: write
     steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # yamllint disable rule:line-length
+          role-to-assume: arn:aws:iam::471112781046:role/service-role/gha-authenticated/GitHubAction
+          aws-region: us-east-2
+          audience: sts.amazonaws.com
 
       - name: Checkout
         uses: >- #v4.1.6
@@ -31,25 +39,23 @@ jobs:
       - name: Cache Nix derivations
         uses: >- # v6
           DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e
-      - name: Mount bazel cache
-        uses: >- # v4.0.2
-          actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
-        with:
-          path: |
-            ~/.cache/bazel
-          key: >-
-            ${{ runner.os }}-bazel-${{ hashFiles(
-              '.bazelversion',
-              '.bazelrc',
-              'MODULE.bazel',
-              'MODULE.bazel.lock',
-              '**/*.nix',
-              'flake.lock'
-            ) }}
-          restore-keys: |
-            ${{ runner.os }}-bazel-
+      - name: Get AWS session token
+        id: get_session_token
+        run: |
+          # yamllint disable rule:line-length
+          TOKEN=$(aws sts get-session-token --query 'Credentials.SessionToken' --output text)
+          echo "SESSION_TOKEN=$TOKEN" >> $GITHUB_OUTPUT
 
       - name: Invoke Bazel build in Nix shell
+        env:
+          # yamllint disable rule:line-length
+          AWS_SESSION_TOKEN: ${{ steps.get_session_token.outputs.SESSION_TOKEN }}
         run: |
           nix develop --impure --command \
-          bash -c "bazel test --jobs=4 @mojo//... --verbose_failures"
+          bash -c "bazel test \
+            --jobs=4 \
+            --verbose_failures \
+            --experimental_remote_cache_async \
+            --remote_header=x-nativelink-api-key=$AWS_SESSION_TOKEN \
+            --remote_cache=grpcs://cas-gha-ci.build-faster.nativelink.net:443 \
+            @mojo//..."
