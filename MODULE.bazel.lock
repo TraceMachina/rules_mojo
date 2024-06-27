@@ -78,7 +78,7 @@
   "moduleExtensions": {
     "//mojo:extensions.bzl%rules_mojo_dependencies": {
       "general": {
-        "bzlTransitiveDigest": "ptfILHnFcBR8I4/aIDEeNz+C/YabsS+Li+zw35j28x8=",
+        "bzlTransitiveDigest": "kJ7yyCKniCfenLnHmoV3VLS6Owj6jjNbqqciMUrBv7o=",
         "usagesDigest": "21ttnpTWydsntbNGPYhFgSzHaqJHlvPhqHEN91AXyrg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -89,11 +89,11 @@
             "ruleClassName": "http_archive",
             "attributes": {
               "build_file": "@@//thirdparty:mojo.BUILD.bazel",
-              "integrity": "sha256-M4hGfPmiY3PX9otPZk38JCwWEQgL3z/YOZJ04CDAmkk=",
+              "integrity": "sha256-PqgP+ELm4FL5989EJI8vjJvSRpPhtOpv5TH86k4BZR8=",
               "urls": [
-                "https://github.com/modularml/mojo/archive/7e8cd37ff8fe2ddbe69a3cca787e59abf6357d76.zip"
+                "https://github.com/modularml/mojo/archive/454974d477a44b93365181c77f20d9e1fe1aceaa.zip"
               ],
-              "strip_prefix": "mojo-7e8cd37ff8fe2ddbe69a3cca787e59abf6357d76"
+              "strip_prefix": "mojo-454974d477a44b93365181c77f20d9e1fe1aceaa"
             }
           }
         },
