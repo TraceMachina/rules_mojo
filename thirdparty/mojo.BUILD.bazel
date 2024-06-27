@@ -30,6 +30,7 @@ mojo_library(
 
             # Handled separately due to nonstandard compile parameters.
             "stdlib/test/builtin/test_file.mojo",
+            "stdlib/test/builtin/test_sort.mojo",
             "stdlib/test/os/test_getenv_setenv.mojo",
             "stdlib/test/sys/test_aarch64_target.mojo",
             "stdlib/test/sys/test_macos_target.mojo",
@@ -61,6 +62,7 @@ mojo_library(
             "stdlib/test/os/test_trap.mojo",
             "stdlib/test/os/test_trap_stringable.mojo",
             "stdlib/test/sys/test_exit_1.mojo",
+            "stdlib/test/sys/test_dlhandle.mojo",
 
             # rules_mojo doesn't support Python interop yet.
             "stdlib/test/python/test_ownership.mojo",
@@ -74,17 +76,23 @@ mojo_library(
     )
 ]
 
-mojo_test(
-    name = "test_builtin_test_file",
-    srcs = ["stdlib/test/builtin/test_file.mojo"],
-    deps = [":stdlib"],
-    defines = [
-        # TODO(aaronmondal): Hack. Handle runfiles properly.
-        "CURRENT_DIR=../_main~rules_mojo_dependencies~mojo/stdlib/test/builtin",
-        "TEMP_FILE_DIR=testdir",
-    ],
-    runtime_data = ["stdlib/test/builtin/test_file_dummy_input.txt"],
-)
+# These make use of _dir_of_current_file and expect to have the runtime data
+# available at the same location as the test executable, making them
+# incompatible with a naive Bazel `runfile` approach. To work around this we run
+# them locally.
+[
+    mojo_test(
+        name = file.replace("/", "_").removeprefix("stdlib_").removesuffix(".mojo"),
+        srcs = [file],
+        deps = [":stdlib"],
+        tags = ["local"],
+        runtime_data = ["stdlib/test/builtin/test_file_dummy_input.txt"],
+    )
+    for file in [
+        "stdlib/test/builtin/test_sort.mojo",
+        "stdlib/test/builtin/test_file.mojo",
+    ]
+]
 
 # TODO(aaronmondal): Add support for testtime environment variables.
 # mojo_test(

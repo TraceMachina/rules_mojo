@@ -25,11 +25,12 @@ in
 
 stdenv.mkDerivation rec {
   pname = "mojo";
-  version = "2024.5.1905";
+  version = "2024.6.2614";
+  fullVersion = "${version}-78-0";
 
   src = fetchurl {
-    url = "https://packages.modular.com/nightly/mojo/packages/${version}/mojo-x86_64-unknown-linux-gnu-${version}-37-0.tar.zst";
-    sha256 = "sha256-k4oIv9p4DQ7E7o8Jsb7ISJ+Rbqcj32q1LQIMxSSMiBo=";
+    url = "https://packages.modular.com/nightly/mojo/packages/${version}/mojo-x86_64-unknown-linux-gnu-${fullVersion}.tar.zst";
+    sha256 = "sha256-vviicX3lfdLKtjVbOkEZIG+o9usbfMCJhnzmALSNtfI=";
 
     # Stable crashes in remote execution.
     # url = "https://packages.modular.com/mojo/packages/${version}/mojo-x86_64-unknown-linux-gnu-${version}-13-0.tar.zst";
@@ -81,7 +82,7 @@ stdenv.mkDerivation rec {
     # WARNING: At the moment linking phase can't figure out how to link tinfo.
     # To work around this we allow leaving the tinfo symbols undefined and
     # unlinked. This is a risky practice and might trigger segfaults at runtime.
-    sed -i "s|system_libs = -lrt,-ldl,-lpthread,-lm,-lz,-ltinfo;|system_libs = -fuse-ld=mold,-lrt,-ldl,-lpthread,-lm,-Xlinker,-rpath=${glibc}/lib,-L,${zlib}/lib,-Xlinker,-rpath=${zlib}/lib,-Xlinker,-L,${tinfo}/lib,-Xlinker,-rpath=${tinfo}/lib,-Xlinker,-rpath=${stdenv.cc.cc.lib}/lib,-Xlinker,--unresolved-symbols=ignore-in-object-files,--verbose;|g" modular.cfg
+    sed -i "s|system_libs = -lrt,-ldl,-lpthread,-lm,-lz;|system_libs = -fuse-ld=mold,-lrt,-ldl,-lpthread,-lm,-Xlinker,-rpath=${glibc}/lib,-L,${zlib}/lib,-Xlinker,-rpath=${zlib}/lib,-Xlinker,-rpath=${stdenv.cc.cc.lib}/lib,-Xlinker,--unresolved-symbols=ignore-in-object-files,--verbose;|g" modular.cfg
   '';
 
   installPhase = ''
