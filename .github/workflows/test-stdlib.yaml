@@ -7,7 +7,6 @@ name: 🔥 Test Mojo Standard library
   pull_request:
     branches: [main]
 
-permissions: read-all
 
 jobs:
   stdlib-tests:
@@ -18,8 +17,21 @@ jobs:
         os: [ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    permissions:
+      id-token: write
     steps:
 
+      - name: Get Web Identity Token via Cognito Identity Pool
+        id: web_id_token
+        # See: https://github.com/catnekaise/cognito-idpool-auth/issues/6
+        uses: >- # alpha
+          catnekaise/cognito-idpool-basic-auth@287d4dabb527d8b78d3df6e0436d46e3abd209d3
+        with:
+          # yamllint disable rule:line-length
+          cognito-identity-pool-id: "us-east-2:7edef192-7c1c-4e55-8ab4-6035b9c2288f"
+          aws-account-id: "471112781046"
+          aws-region: "us-east-2"
+          audience: "sts.amazonaws.com"
       - name: Checkout
         uses: >- #v4.1.6
           actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
@@ -31,25 +43,24 @@ jobs:
       - name: Cache Nix derivations
         uses: >- # v6
           DeterminateSystems/magic-nix-cache-action@87e8236f46702ab0ce5a058b605a173ec88d618e
-      - name: Mount bazel cache
-        uses: >- # v4.0.2
-          actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
-        with:
-          path: |
-            ~/.cache/bazel
-          key: >-
-            ${{ runner.os }}-bazel-${{ hashFiles(
-              '.bazelversion',
-              '.bazelrc',
-              'MODULE.bazel',
-              'MODULE.bazel.lock',
-              '**/*.nix',
-              'flake.lock'
-            ) }}
-          restore-keys: |
-            ${{ runner.os }}-bazel-
+
+#     - name: Create secret from token
+#       uses: actions/github-script@v6
+#       with:
+#         # yamllint disable rule:line-length
+#         script: >-
+#           core.setSecret('NATIVELINK_TOKEN',
+#           '${{ steps.web_id_token.outputs.cognito_identity_oidc_access_token }}')
 
       - name: Invoke Bazel build in Nix shell
+        env:
+          NATIVELINK_TOKEN: ${{ env.NATIVELINK_TOKEN }}
         run: |
           nix develop --impure --command \
-          bash -c "bazel test --jobs=4 @mojo//... --verbose_failures"
+          bash -c "bazel test \
+            --jobs=4 \
+            --verbose_failures \
+            --experimental_remote_cache_async \
+            --remote_header=x-nativelink-api-key=$NATIVELINK_TOKEN \
+            --remote_cache=grpcs://cas-gha-ci.build-faster.nativelink.net:443 \
+            @mojo//..."
